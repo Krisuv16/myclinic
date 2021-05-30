@@ -1,38 +1,21 @@
-import 'dart:convert';
 import 'dart:io';
-import 'package:http/http.dart' as http;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:jitsi_meet/jitsi_meet.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-
-import '../../app_constant.dart';
 
 class Meeting extends StatefulWidget {
   int index;
-  Meeting({this.index});
+  String newdata;
+  Meeting({this.index, this.newdata});
   @override
   _MeetingState createState() => _MeetingState();
 }
 
 class _MeetingState extends State<Meeting> {
-  var data;
-  Future getmeetinginfo() async {
-    SharedPreferences pid = await SharedPreferences.getInstance();
-    var token = pid.get("token");
-    var url = Uri.parse(api_url + "/booking/meeting/");
-    var response = await http.post(url, headers: {
-      HttpHeaders.contentTypeHeader: "application/json",
-      HttpHeaders.authorizationHeader: "Bearer $token"
-    });
-    data = response.body;
-    print(data);
-    return response.body;
-  }
-
-  final serverText = TextEditingController();
-  final roomText = TextEditingController(text: " asdasd");
+ 
+   final serverText = TextEditingController();
+  final roomText = TextEditingController(text: "Meeting Link");
   final subjectText = TextEditingController(text: "My Plugin Test Meeting");
   final nameText = TextEditingController(text: "Plugin Test User");
   final emailText = TextEditingController(text: "fake@email.com");
@@ -45,8 +28,7 @@ class _MeetingState extends State<Meeting> {
   @override
   void initState() {
     super.initState();
-    getmeetinginfo();
-    print(data);
+    print(widget.newdata);
     JitsiMeet.addListener(JitsiMeetingListener(
         onConferenceWillJoin: _onConferenceWillJoin,
         onConferenceJoined: _onConferenceJoined,
@@ -249,7 +231,7 @@ class _MeetingState extends State<Meeting> {
       }
     }
     // Define meetings options here
-    var options = JitsiMeetingOptions(room: roomText.text)
+    var options = JitsiMeetingOptions(room: widget.newdata)
       ..serverURL = serverUrl
       ..subject = subjectText.text
       ..userDisplayName = nameText.text
@@ -260,7 +242,7 @@ class _MeetingState extends State<Meeting> {
       ..videoMuted = isVideoMuted
       ..featureFlags.addAll(featureFlags)
       ..webOptions = {
-        "roomName": roomText.text,
+        "roomName": widget.newdata,
         "width": "100%",
         "height": "100%",
         "enableWelcomePage": false,

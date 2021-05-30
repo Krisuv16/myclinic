@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:myclinic/patient/view_drdetails.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../app_constant.dart';
@@ -200,13 +201,28 @@ class _BookedAppointmentState extends State<BookedAppointment> {
                                       ],
                                     ),
                                   ),
-                                  SizedBox(height: 10,),
+                                  SizedBox(
+                                    height: 10,
+                                  ),
                                   Card(
                                     color: Colors.green,
                                     elevation: 8,
                                     child: TextButton(
-                                        onPressed: () {},
-                                        child: Text("View Details",style: TextStyle(color: Colors.white),)),
+                                        onPressed: () {
+                                          Navigator.of(context).push(
+                                              new MaterialPageRoute(
+                                                  builder: (BuildContext
+                                                          context) =>
+                                                      new ViewDDetails(
+                                                        list: snapshot.data,
+                                                        index: i,
+                                                      )));
+                                          
+                                        },
+                                        child: Text(
+                                          "View Details",
+                                          style: TextStyle(color: Colors.white),
+                                        )),
                                   )
                                 ],
                               ),

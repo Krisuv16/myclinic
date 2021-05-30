@@ -7,19 +7,19 @@ import 'package:myclinic/screens/doctor/videocall.dart';
 
 import '../../app_constant.dart';
 
-class ViewPatientDetails extends StatefulWidget {
+class ViewDDetails extends StatefulWidget {
   List list;
   int index;
-  ViewPatientDetails({this.index, this.list});
+  ViewDDetails({this.index, this.list});
   @override
-  _ViewPatientDetailsState createState() => _ViewPatientDetailsState();
+  _ViewDDetailsState createState() => _ViewDDetailsState();
 }
 
-class _ViewPatientDetailsState extends State<ViewPatientDetails> {
+class _ViewDDetailsState extends State<ViewDDetails> {
   bool enable = true;
   Future<PatProfile> getdata() async {
-    var url = Uri.parse(
-        api_url + "/users/patient/${widget.list[widget.index]['patient']}");
+    var url = Uri.parse(api_url +
+        "/users/doctor/${widget.list[widget.index]["appointment"]['doctor']["user"]}");
     var response = await http.get(url);
     if (response.statusCode == 200) {
       return PatProfile.fromJson(jsonDecode(response.body));
@@ -59,7 +59,7 @@ class _ViewPatientDetailsState extends State<ViewPatientDetails> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Container(
-                            height: 200,
+                            height: 250,
                             width: MediaQuery.of(context).size.width,
                             child: Card(
                               elevation: 5,
@@ -73,7 +73,7 @@ class _ViewPatientDetailsState extends State<ViewPatientDetails> {
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       children: [
-                                        Text("Patient Information",
+                                        Text("Docotr Information",
                                             style: TextStyle(
                                                 fontSize: 25,
                                                 fontWeight: FontWeight.w600)),
@@ -136,7 +136,7 @@ class _ViewPatientDetailsState extends State<ViewPatientDetails> {
                             height: 25,
                           ),
                           Container(
-                            height: 100,
+                            height: 150,
                             width: double.infinity,
                             child: Card(
                               child: Padding(
